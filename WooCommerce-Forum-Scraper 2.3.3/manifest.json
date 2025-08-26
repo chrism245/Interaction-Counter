@@ -1,0 +1,50 @@
+{
+  "manifest_version": 3,
+  "name": "WooCommerce Forum Scraper",
+  "version": "2.3.3",
+  "description": "Scrape WooCommerce forum threads and reviews, save to Google Sheets",
+  "permissions": [
+    "identity",
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*.wordpress.org/support/topic/*",
+    "https://*.wordpress.org/support/plugin/*",
+    "https://sheets.googleapis.com/*",
+    "https://www.googleapis.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "oauth2": {
+    "client_id": "231424356877-j2v2d7pdofu7q0sbg5omc8alu6pi06ao.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/spreadsheets"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://wordpress.org/support/plugin/*/reviews/*"
+      ],
+      "js": ["content-reviews.js"],
+      "run_at": "document_idle"
+    }
+  ]
+} 

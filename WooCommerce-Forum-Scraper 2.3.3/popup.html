@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>WooCommerce Forum Scraper</title>
+  <style>
+    body { font-family: Arial, sans-serif; width: 300px; padding: 10px; }
+    button { width: 100%; padding: 10px; margin-top: 10px; }
+    #status { margin-top: 15px; font-size: 14px; }
+    #drive-picker-container { display: none; margin-top: 10px; }
+    #drive-sidebar { width: 140px; border-right: 1px solid #ccc; padding-right: 10px; }
+    .drive-option { cursor: pointer; font-weight: bold; margin-bottom: 8px; padding: 8px; border-radius: 4px; }
+    .drive-option:hover { background-color: #f0f0f0; }
+    select { width: 100%; padding: 8px; margin-top: 10px; border: 1px solid #ccc; border-radius: 4px; }
+    .forum-section { 
+      background-color: #f8f9fa; 
+      padding: 10px; 
+      border-radius: 4px; 
+      margin: 10px 0; 
+      border: 1px solid #e9ecef;
+    }
+    .section-label {
+      font-size: 13px;
+      font-weight: bold;
+      color: #495057;
+      margin-bottom: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Woo Scraper</h2>
+  <button id="settings-toggle" style="width:auto; float:right; margin-top:-40px; margin-right:0; background:none; border:none; cursor:pointer; font-size:18px;" title="Settings">
+    <span style="vertical-align:middle;">&#9881;</span> <span style="font-size:14px;">Settings</span>
+  </button>
+
+  <div id="settings-panel" style="display:none; border:1px solid #e9ecef; border-radius:4px; padding:12px; margin-bottom:15px; background:#f8f9fa;">
+    <div id="api-config">
+      <label for="api-key" style="font-size:13px;">Google API Key:</label>
+      <input type="text" id="api-key" style="width:100%;margin-bottom:5px;" placeholder="Enter your Google API Key">
+      <label for="ext-id" style="font-size:13px;">Chrome Extension ID:</label>
+      <input type="text" id="ext-id" style="width:100%;margin-bottom:5px;" placeholder="Enter your Extension ID">
+      <button id="save-keys" style="width:auto; padding:6px 12px; margin-right:8px;">
+        <span style="font-size:15px;">💾</span> Save
+      </button>
+      <span id="save-status" style="margin-left:8px;font-size:12px;color:green;"></span>
+    </div>
+    <div style="margin-top:10px;">
+      <button id="edit-api-config" style="width:auto; padding:6px 12px; margin-right:8px;">
+        <span style="font-size:15px;">✏️</span> Edit
+      </button>
+      <button id="reset-api-config" style="width:auto; padding:6px 12px;">
+        <span style="font-size:15px;">♻️</span> Reset
+      </button>
+    </div>
+    <div style="margin-top:15px; display:flex; align-items:center;">
+      <button id="auth" style="width:auto; padding:6px 12px; margin-right:8px;">
+        <span style="font-size:15px;">🔑</span> Check Authentication
+      </button>
+      <span id="auth-status" style="font-size:12px; color:green;"></span>
+    </div>
+    <div style="margin-top:10px;">
+      <button id="choose-drive-folder" style="width:auto; padding:6px 12px;">
+        <span style="font-size:15px;">📁</span> Choose Google Drive Folder
+      </button>
+    </div>
+    <div id="drive-picker-container" style="display:none; margin-top:10px;">
+      <div style="display: flex; min-height: 200px;">
+        <div id="drive-sidebar">
+          <div id="my-drive-root" class="drive-option">My Drive</div>
+          <div id="shared-drives-root" class="drive-option">Shared drives</div>
+          <div id="shared-with-me-root" class="drive-option">Shared with me</div>
+        </div>
+        <div id="folder-tree" style="flex:1; padding-left: 10px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="forum-section">
+    <div class="section-label">Select Forum to Scrape:</div>
+    <select id="forum-select">
+      <option value="">-- Select Forum --</option>
+      <option value="woocommerce">WooCommerce</option>
+      <option value="woocommerce-payments">WooCommerce Payments</option>
+      <option value="google-listings-and-ads">Google for WooCommerce</option>
+      <option value="woocommerce-gateway-stripe">WooCommerce Stripe Gateway</option>
+      <option value="woocommerce-square">WooCommerce Square</option>
+    </select>
+    <div style="margin-top: 15px;">
+      <div class="section-label">Pages to Scrape:</div>
+      <label style="font-size: 13px; margin-right: 8px;">From
+        <input type="number" id="page-from" value="1" min="1" max="50" style="width: 50px; padding: 5px; margin-left: 4px;">
+      </label>
+      <label style="font-size: 13px;">To
+        <input type="number" id="page-to" value="5" min="1" max="50" style="width: 50px; padding: 5px; margin-left: 4px;">
+      </label>
+      <span style="font-size: 12px; color: #666; margin-left: 8px;">(1-50)</span>
+    </div>
+  </div>
+
+  <button id="start">Start Scraping</button>
+  <button id="copy-review-script">
+    <span style="font-size:15px;">📋</span> Copy Review Snippet
+  </button>
+  
+  <div style="margin-top:15px;font-size:14px;font-weight:bold;">The Google Sheet will be saved in:</div>
+  <div id="selected-folder" style="margin-top:5px;font-size:13px;color:#333;">No folder selected (will be saved to My Drive root)</div>
+  <div id="status"></div>
+  <script src="popup.js"></script>
+</body>
+</html> 
