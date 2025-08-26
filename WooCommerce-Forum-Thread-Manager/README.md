@@ -212,9 +212,9 @@ This project is open source and available under the [MIT License](LICENSE).
 - Powered by OpenAI's GPT models
 - Enhanced through community feedback and testing
 
-## 📞 Support
+## Bugs
 
-For support, questions, or feature requests:
+For bugs, questions, or feature requests:
 - Create an issue on GitHub
 - Include detailed information about your setup
 - Provide console logs if experiencing issues
